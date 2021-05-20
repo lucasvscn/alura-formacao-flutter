@@ -5,24 +5,25 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({
-    Key? key,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Bytebank',
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('Transferências'),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: Icon(Icons.add),
-        ),
-        body: ListaTransferencias(),
+        body: FormulatioTransferencia(),
       ),
+    );
+  }
+}
+
+class FormulatioTransferencia extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Criando transferência'),
+      ),
+      body: Text('o formulário vai aqui'),
     );
   }
 }
@@ -30,12 +31,21 @@ class MyApp extends StatelessWidget {
 class ListaTransferencias extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ItemTransferencia(Transferencia(100.0, 1000)),
-        ItemTransferencia(Transferencia(200.0, 1001)),
-        ItemTransferencia(Transferencia(300.0, 2000)),
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Transferências'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.add),
+      ),
+      body: Column(
+        children: [
+          ItemTransferencia(Transferencia(100.0, 1000)),
+          ItemTransferencia(Transferencia(200.0, 1001)),
+          ItemTransferencia(Transferencia(300.0, 2000)),
+        ],
+      ),
     );
   }
 }
