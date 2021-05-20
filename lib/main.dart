@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'screens/dashboard.dart';
+
 void main() {
   runApp(BytebankApp());
 }
@@ -17,25 +19,7 @@ class BytebankApp extends StatelessWidget {
           textTheme: ButtonTextTheme.primary,
         ),
       ),
-      home: Scaffold(
-        appBar: AppBar(title: Text('Dashboard')),
-        body: Column(
-          children: [
-            Image.asset('images/bytebank_logo.png'),
-            Container(
-              height: 100,
-              width: 120,
-              color: Colors.green,
-              child: Column(
-                children: [
-                  Icon(Icons.people),
-                  Text('Contacts'),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+      home: Dashboard(),
     );
   }
 }
