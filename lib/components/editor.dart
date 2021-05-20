@@ -7,12 +7,14 @@ class Editor extends StatelessWidget {
   // receber Icon? em vez de IconData elimina necessidade de tratamento
   // adicional em função do null safety (Dart 2.12).
   final Icon? icone;
+  final TextInputType? inputType;
 
   const Editor({
     required this.controlador,
     required this.rotulo,
     required this.dica,
     this.icone,
+    this.inputType,
     Key? key,
   }) : super(key: key);
 
@@ -30,7 +32,7 @@ class Editor extends StatelessWidget {
           hintText: dica,
           icon: icone,
         ),
-        keyboardType: TextInputType.number,
+        keyboardType: inputType,
       ),
     );
   }

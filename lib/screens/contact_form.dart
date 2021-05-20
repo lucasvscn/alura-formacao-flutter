@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../components/editor.dart';
+import '../models/contact.dart';
 
 const _titleAppBar = 'New contact';
 
@@ -12,8 +13,14 @@ const _hintAccountNumber = '0000';
 
 const _textCreateButton = 'Create';
 
-class ContactForm extends StatelessWidget {
+class ContactForm extends StatefulWidget {
+  @override
+  _ContactFormState createState() => _ContactFormState();
+}
+
+class _ContactFormState extends State<ContactForm> {
   final TextEditingController _controllerFullName = TextEditingController();
+
   final TextEditingController _controllerAccountNumber =
       TextEditingController();
 
@@ -32,6 +39,7 @@ class ContactForm extends StatelessWidget {
             controlador: _controllerAccountNumber,
             rotulo: _labelAccountNumber,
             dica: _hintAccountNumber,
+            inputType: TextInputType.number,
           ),
           Padding(
             padding:
@@ -42,7 +50,7 @@ class ContactForm extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.all(20.0),
                   ),
-                  onPressed: () {},
+                  onPressed: () => _createContact(context),
                   child: Text(
                     _textCreateButton,
                     style: TextStyle(fontSize: 24.0),
@@ -52,5 +60,15 @@ class ContactForm extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _createContact(BuildContext context) {
+    try {
+      final String name = _controllerFullName.text;
+      final int accountNumber = int.parse(_controllerAccountNumber.text);
+
+      final newContact = Contact(name, accountNumber);
+      Navigator.pop(context, newContact);
+    } catch (_) {}
   }
 }
