@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(
-    MaterialApp(
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
       title: 'Bytebank',
       home: Scaffold(
         appBar: AppBar(
@@ -14,17 +23,23 @@ void main() {
         ),
         body: Column(
           children: [
-            Text('Deliver features faster'),
-            Text('Craft beautiful UIs'),
-            Expanded(
-              child: FittedBox(
-                fit: BoxFit.contain,
-                child: FlutterLogo(),
+            Card(
+              child: ListTile(
+                leading: Icon(Icons.monetization_on),
+                title: Text('100.0'),
+                subtitle: Text('1000'),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                leading: Icon(Icons.monetization_on),
+                title: Text('200.0'),
+                subtitle: Text('1000'),
               ),
             ),
           ],
         ),
       ),
-    ),
-  );
+    );
+  }
 }
