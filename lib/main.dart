@@ -17,6 +17,10 @@ class MyApp extends StatelessWidget {
 }
 
 class FormulatioTransferencia extends StatelessWidget {
+  final TextEditingController _controladorCampoNumeroConta =
+      TextEditingController();
+  final TextEditingController _controladorCampoValor = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +32,7 @@ class FormulatioTransferencia extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextField(
+              controller: _controladorCampoNumeroConta,
               style: TextStyle(
                 fontSize: 24.0,
               ),
@@ -41,6 +46,7 @@ class FormulatioTransferencia extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextField(
+              controller: _controladorCampoValor,
               style: TextStyle(
                 fontSize: 24.0,
               ),
@@ -53,7 +59,26 @@ class FormulatioTransferencia extends StatelessWidget {
             ),
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              debugPrint('clicou no Confirmar');
+
+              // int.tryParse() usado originalmente.
+              //
+              // no Dart 2.12 este método retorna tipo int? que é incompatível
+              // com API da aplicação.
+              //
+              // bloco try-catch foi  necessário, uma vez que int.parse()
+              // dispara uma excessão caso valor do parâmetro seja Null.
+              try {
+                final int numeroConta =
+                    int.parse(_controladorCampoNumeroConta.text);
+                final double valor = double.parse(_controladorCampoValor.text);
+
+                final transferenciaCriada = Transferencia(valor, numeroConta);
+
+                debugPrint('transferenciaCriada: $transferenciaCriada');
+              } catch (_) {}
+            },
             child: Text('Confirmar'),
           ),
         ],
@@ -106,4 +131,9 @@ class Transferencia {
   final int numeroConta;
 
   Transferencia(this.valor, this.numeroConta);
+
+  @override
+  String toString() {
+    return 'Transferencia{valor: $valor, numeroConta: $numeroConta}';
+  }
 }
