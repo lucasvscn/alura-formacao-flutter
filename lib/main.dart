@@ -77,6 +77,15 @@ class FormulatioTransferencia extends StatelessWidget {
                 final transferenciaCriada = Transferencia(valor, numeroConta);
 
                 debugPrint('transferenciaCriada: $transferenciaCriada');
+
+                // Scaffold.of(context).showSnackBar() foi depreciado em
+                // favor de ScaffoldMessenger.of(context).showSnackBar()
+                // (estou usando Flutter 2.2.0)
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('$transferenciaCriada'),
+                  ),
+                );
               } catch (_) {}
             },
             child: Text('Confirmar'),
