@@ -59,24 +59,26 @@ class FormulatioTransferencia extends StatelessWidget {
       appBar: AppBar(
         title: Text('Criando transferência'),
       ),
-      body: Column(
-        children: [
-          Editor(
-            controlador: _controladorCampoNumeroConta,
-            rotulo: 'Número da conta',
-            dica: '0000',
-          ),
-          Editor(
-            controlador: _controladorCampoValor,
-            rotulo: 'Valor',
-            dica: '0.00',
-            icone: Icon(Icons.monetization_on),
-          ),
-          ElevatedButton(
-            onPressed: () => _criaTransferencia(context),
-            child: Text('Confirmar'),
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Editor(
+              controlador: _controladorCampoNumeroConta,
+              rotulo: 'Número da conta',
+              dica: '0000',
+            ),
+            Editor(
+              controlador: _controladorCampoValor,
+              rotulo: 'Valor',
+              dica: '0.00',
+              icone: Icon(Icons.monetization_on),
+            ),
+            ElevatedButton(
+              onPressed: () => _criaTransferencia(context),
+              child: Text('Confirmar'),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -118,15 +120,20 @@ class Editor extends StatelessWidget {
   }
 }
 
-class ListaTransferencias extends StatelessWidget {
+class ListaTransferencias extends StatefulWidget {
   final List<Transferencia> _transferencias = [];
 
   @override
+  _ListaTransferenciasState createState() => _ListaTransferenciasState();
+}
+
+class _ListaTransferenciasState extends State<ListaTransferencias> {
+  @override
   Widget build(BuildContext context) {
-    _transferencias.add(Transferencia(100.0, 1000));
-    _transferencias.add(Transferencia(100.0, 1000));
-    _transferencias.add(Transferencia(100.0, 1000));
-    _transferencias.add(Transferencia(100.0, 1000));
+    // widget._transferencias.add(Transferencia(100.0, 1000));
+    // widget._transferencias.add(Transferencia(100.0, 1000));
+    // widget._transferencias.add(Transferencia(100.0, 1000));
+    // widget._transferencias.add(Transferencia(100.0, 1000));
     return Scaffold(
       appBar: AppBar(
         title: Text('Transferências'),
@@ -143,15 +150,19 @@ class ListaTransferencias extends StatelessWidget {
           future.then((transferenciaRecebida) {
             debugPrint('chegou no then do future');
             debugPrint('$transferenciaRecebida');
-            _transferencias.add(transferenciaRecebida);
+            if (transferenciaRecebida != null) {
+              setState(() {
+                widget._transferencias.add(transferenciaRecebida);
+              });
+            }
           });
         },
         child: Icon(Icons.add),
       ),
       body: ListView.builder(
-        itemCount: _transferencias.length,
+        itemCount: widget._transferencias.length,
         itemBuilder: (context, index) {
-          return ItemTransferencia(_transferencias[index]);
+          return ItemTransferencia(widget._transferencias[index]);
         },
       ),
     );
