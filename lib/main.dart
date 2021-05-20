@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Bytebank',
       home: Scaffold(
-        body: FormulatioTransferencia(),
+        body: ListaTransferencias(),
       ),
     );
   }
@@ -48,6 +48,8 @@ class FormulatioTransferencia extends StatelessWidget {
           content: Text('$transferenciaCriada'),
         ),
       );
+
+      Navigator.pop(context, transferenciaCriada);
     } catch (_) {}
   }
 
@@ -124,7 +126,19 @@ class ListaTransferencias extends StatelessWidget {
         title: Text('Transferências'),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          final Future future = Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => FormulatioTransferencia(),
+            ),
+          );
+
+          future.then((transferenciaRecebida) {
+            debugPrint('chegou no then do future');
+            debugPrint('$transferenciaRecebida');
+          });
+        },
         child: Icon(Icons.add),
       ),
       body: Column(
