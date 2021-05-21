@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../components/editor.dart';
+import '../database/app_database.dart';
 import '../models/contact.dart';
 
 const _titleAppBar = 'New contact';
@@ -68,7 +69,10 @@ class _ContactFormState extends State<ContactForm> {
       final int accountNumber = int.parse(_controllerAccountNumber.text);
 
       final newContact = Contact(name: name, accountNumber: accountNumber);
-      Navigator.pop(context, newContact);
+
+      save(newContact).then((id) {
+        Navigator.pop(context);
+      });
     } catch (_) {}
   }
 }

@@ -3,9 +3,12 @@ import 'package:bytebank/models/contact.dart';
 import 'package:bytebank/screens/contact_form.dart';
 import 'package:flutter/material.dart';
 
-class ContactsList extends StatelessWidget {
-  final List<Contact> contacts = [];
+class ContactsList extends StatefulWidget {
+  @override
+  _ContactsListState createState() => _ContactsListState();
+}
 
+class _ContactsListState extends State<ContactsList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,12 +23,12 @@ class ContactsList extends StatelessWidget {
                   builder: (context) => ContactForm(),
                 ),
               )
-              .then((newContact) => debugPrint(newContact.toString()));
+              .then((value) => setState(() {}));
         },
         child: Icon(Icons.add),
       ),
       body: FutureBuilder(
-        future: Future.delayed(Duration(seconds: 2)).then((value) => findAll()),
+        future: findAll(),
         initialData: [],
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
@@ -67,11 +70,11 @@ class _ContactItem extends StatelessWidget {
     return Card(
       child: ListTile(
         title: Text(
-          'Lucas',
+          contact.name,
           style: TextStyle(fontSize: 24.0),
         ),
         subtitle: Text(
-          '1000',
+          contact.accountNumber.toString(),
           style: TextStyle(fontSize: 18.0),
         ),
       ),
