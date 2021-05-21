@@ -25,19 +25,35 @@ class ContactsList extends StatelessWidget {
         child: Icon(Icons.add),
       ),
       body: FutureBuilder(
-        future: findAll(),
+        future: Future.delayed(Duration(seconds: 2)).then((value) => findAll()),
+        initialData: [],
         builder: (context, snapshot) {
-          // final List<Contact> contacts = snapshot.data;
-          // declaracao na linha anterior não é compatível com
-          // Dart 2.12 (Null safety).
-          return ListView.builder(
-              itemCount: contacts.length,
-              itemBuilder: (context, index) {
-                return _ContactItem(contacts[index]);
-              });
+          switch (snapshot.connectionState) {
+            case ConnectionState.done:
+              return _listView(snapshot.data);
+            default:
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                    Text('Loading'),
+                  ],
+                ),
+              );
+          }
         },
       ),
     );
+  }
+
+  ListView _listView(data) {
+    return ListView.builder(
+        itemCount: data.length,
+        itemBuilder: (context, index) {
+          return _ContactItem(data[index]);
+        });
   }
 }
 
