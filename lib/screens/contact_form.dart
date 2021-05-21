@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../components/editor.dart';
-import '../database/app_database.dart';
+import '../database/dao/contact_dao.dart';
 import '../models/contact.dart';
 
 const _titleAppBar = 'New contact';
@@ -20,6 +20,8 @@ class ContactForm extends StatefulWidget {
 }
 
 class _ContactFormState extends State<ContactForm> {
+  final ContactDao _dao = ContactDao();
+
   final TextEditingController _controllerFullName = TextEditingController();
 
   final TextEditingController _controllerAccountNumber =
@@ -70,7 +72,7 @@ class _ContactFormState extends State<ContactForm> {
 
       final newContact = Contact(name: name, accountNumber: accountNumber);
 
-      save(newContact).then((id) {
+      _dao.save(newContact).then((id) {
         Navigator.pop(context);
       });
     } catch (_) {}
